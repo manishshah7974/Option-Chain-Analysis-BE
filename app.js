@@ -10,6 +10,12 @@ const PORT = process.env.PORT || 443;
 const HOST_NAME = process.env.HOST_NAME || "0.0.0.0";
 require("./cronJobs/optionChainCron");
 
+app.use(cors({
+  origin: '*',
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  credentials: true,
+}));
+
 // Middleware
 app.use(bodyParser.json());
 app.use(cors());
@@ -44,6 +50,6 @@ app.use("/", routesMapper);
 // });
 
 // Start server for local development
-http.createServer(app).listen(PORT, HOST_NAME, () => {
-  console.log(`HTTP server running at http://${HOST_NAME}:${PORT}`);
+app.listen(PORT, HOST_NAME, () => {
+  console.log(`✅ Server running at http://${HOST_NAME}:${PORT}`);
 });
