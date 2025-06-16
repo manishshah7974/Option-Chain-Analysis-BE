@@ -1,12 +1,16 @@
 function getScrappingTimestamp() {
   const now = new Date();
-  const scrappingDate = now.toLocaleDateString('en-GB'); // dd/mm/yyyy
-  const scrappingTime = now.toLocaleTimeString('en-US', {
-    hour: 'numeric',
-    hour12: false,
-  });
+
+  // Format for IST
+  const optionsDate = { timeZone: 'Asia/Kolkata', day: '2-digit', month: '2-digit', year: 'numeric' };
+  const optionsTime = { timeZone: 'Asia/Kolkata', hour: '2-digit', hour12: false };
+
+  const scrappingDate = new Intl.DateTimeFormat('en-GB', optionsDate).format(now);
+  const scrappingTime = new Intl.DateTimeFormat('en-US', optionsTime).format(now);
+
   return { scrappingDate, scrappingTime };
 }
+
 
 function extractOptionChain(jsonData, targetStrike, expiryList, range, interval) {
   if (!jsonData.records || !Array.isArray(jsonData.records.data)) {
